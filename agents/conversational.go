@@ -59,7 +59,7 @@ func NewConversationalAgent(llm llms.Model, tools []tools.Tool, opts ...Option) 
 }
 
 // Plan decides what action to take or returns the final result of the input.
-func (a *ConversationalAgent) Plan(
+func (a ConversationalAgent) Plan(
 	ctx context.Context,
 	intermediateSteps []schema.AgentStep,
 	inputs map[string]string,
@@ -94,7 +94,7 @@ func (a *ConversationalAgent) Plan(
 	return a.parseOutput(output)
 }
 
-func (a *ConversationalAgent) GetInputKeys() []string {
+func (a ConversationalAgent) GetInputKeys() []string {
 	chainInputs := a.Chain.GetInputKeys()
 
 	// Remove inputs given in plan.
@@ -109,11 +109,11 @@ func (a *ConversationalAgent) GetInputKeys() []string {
 	return agentInput
 }
 
-func (a *ConversationalAgent) GetOutputKeys() []string {
+func (a ConversationalAgent) GetOutputKeys() []string {
 	return []string{a.OutputKey}
 }
 
-func (a *ConversationalAgent) GetTools() []tools.Tool {
+func (a ConversationalAgent) GetTools() []tools.Tool {
 	return a.Tools
 }
 
