@@ -54,6 +54,7 @@ func conversationalDefaultOptions() Options {
 		formatInstructions: _defaultConversationalFormatInstructions,
 		promptSuffix:       _defaultConversationalSuffix,
 		outputKey:          _defaultOutputKey,
+		useStreamingMode:   true,
 	}
 }
 
