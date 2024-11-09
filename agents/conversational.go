@@ -36,6 +36,8 @@ type ConversationalAgent struct {
 	OutputKey string
 	// CallbacksHandler is the handler for callbacks.
 	CallbacksHandler callbacks.Handler
+
+	UseStreamingMode bool
 }
 
 var _ Agent = (*ConversationalAgent)(nil)
@@ -55,6 +57,7 @@ func NewConversationalAgent(llm llms.Model, tools []tools.Tool, opts ...Option) 
 		Tools:            tools,
 		OutputKey:        options.outputKey,
 		CallbacksHandler: options.callbacksHandler,
+		UseStreamingMode: options.useStreamingMode,
 	}
 }
 
@@ -74,7 +77,7 @@ func (a *ConversationalAgent) Plan(
 
 	var stream func(ctx context.Context, chunk []byte) error
 
-	if a.CallbacksHandler != nil {
+	if a.UseStreamingMode && a.CallbacksHandler != nil {
 		stream = func(ctx context.Context, chunk []byte) error {
 			a.CallbacksHandler.HandleStreamingFunc(ctx, chunk)
 			return nil

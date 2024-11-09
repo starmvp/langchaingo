@@ -23,6 +23,8 @@ type Options struct {
 	// openai
 	systemMessage string
 	extraMessages []prompts.MessageFormatter
+
+	useStreamingMode bool
 }
 
 // Option is a function type that can be used to modify the creation of the agents
@@ -158,6 +160,12 @@ func WithCallbacksHandler(handler callbacks.Handler) Option {
 func WithParserErrorHandler(errorHandler *ParserErrorHandler) Option {
 	return func(co *Options) {
 		co.errorHandler = errorHandler
+	}
+}
+
+func WithStreamingMode(value bool) Option {
+	return func(co *Options) {
+		co.useStreamingMode = value
 	}
 }
 
